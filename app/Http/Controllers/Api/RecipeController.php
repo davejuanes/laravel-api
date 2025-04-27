@@ -13,7 +13,16 @@ class RecipeController extends Controller
         return Recipe::with('category', 'tags', 'user')->get();
     }
 
+    public function store(Request $request) {
+        $recipe = Recipe::create($request->all());
+        return response()->json($recipe, 201);
+    }
+
     public function show(Recipe $recipe) {
         return $recipe->load('category', 'tags', 'user');
     }
+
+    public function update() {}
+
+    public function destroy() {}
 }
