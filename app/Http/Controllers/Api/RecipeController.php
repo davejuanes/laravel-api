@@ -11,8 +11,9 @@ use App\Http\Resources\RecipeResource;
 class RecipeController extends Controller
 {
     public function index() {
+        $recipes = Recipe::with('category', 'tags', 'user')->get();
         // all, get
-        return Recipe::with('category', 'tags', 'user')->get();
+        return RecipeResource::collection($recipes);
     }
 
     public function store(Request $request) {
@@ -21,7 +22,9 @@ class RecipeController extends Controller
     }
 
     public function show(Recipe $recipe) {
-        return $recipe->load('category', 'tags', 'user');
+        $recipe = $recipe->load('category', 'tags', 'user');
+
+        return new RecipeResource($recipe);
     }
 
     public function update() {}
