@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
+use App\Http\Resources\RecipeResource;
+
 class RecipeController extends Controller
 {
     public function index() {
