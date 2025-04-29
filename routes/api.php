@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\LoginController;
 /* Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum'); */
-Route::get('login', [LoginController::class, 'store']);
+Route::post('login', [LoginController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('categories',                [CategoryController::class, 'index']);
