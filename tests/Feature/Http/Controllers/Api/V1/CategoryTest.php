@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers\Api\V1;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,7 +19,7 @@ class CategoryTest extends TestCase
 
         $categories = Category::factory(2)->create();
 
-        $response = $this->getJson('/api/categories');
+        $response = $this->getJson('/api/v1/categories');
 
         $response->assertStatus(Response::HTTP_OK) // 200
             ->assertJsonCount(2, 'data')
@@ -42,7 +42,7 @@ class CategoryTest extends TestCase
 
         $category = Category::factory()->create();
 
-        $response = $this->getJson('/api/categories/' . $category->id);
+        $response = $this->getJson('/api/v1/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_OK) // 200
             ->assertJsonStructure([
