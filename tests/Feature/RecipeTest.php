@@ -90,6 +90,30 @@ class RecipeTest extends TestCase
             ]);
     }
 
+    public function test_update(): void
+    {
+        Sanctum::actingAs(User::factory()->create()); 
+
+        $category   = Category::factory()->create();
+        $recipe     = Recipe::factory()->create();
+
+        $data = [
+            'category_id'       => $category->id,
+            'title'             => 'Updated title',
+            'description'       => 'Updated description',
+            'ingredients'       => $this->faker->text,
+            'instructions'      => $this->faker->text,
+        ];
+
+        $response = $this->putJson('/api/recipes/' . $recipe->id, $data);
+        $response->assertStatus(Response::HTTP_OK); // 200
+
+        $this->assertDatabaseHas('recipes', [
+            'title'             => 'Updated title',
+            'description'       => 'Updated description',
+        ]);
+    }
+
     public function test_destroy(): void
     {
         Sanctum::actingAs(User::factory()->create());
