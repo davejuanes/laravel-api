@@ -27,6 +27,9 @@ class RecipeController extends Controller
         $recipe = $request->user()->recipes()->create($request->all());
         $recipe->tags()->attach(json_decode($request->input('tags')));
 
+        $recipe->image = $request->file('image')->store('recipes', 'public');
+        $recipe->save();
+
         return response()->json(new RecipeResource($recipe), Response::HTTP_CREATED);  // HTTP 201
     }
 
@@ -43,6 +46,11 @@ class RecipeController extends Controller
 
         if ($tags = json_decode($request->input('tags'))) {
             $recipe->tags()->sync($tags);
+        }
+
+        if ($request->hasFile('image')) {
+            $recipe->image = $request->file('image')->store('recipes', 'public');
+            $recipe->save();
         }
 
         return response()->json(new RecipeResource($recipe), Response::HTTP_OK); // 200
